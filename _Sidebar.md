@@ -1,4 +1,5 @@
 - [Home](https://github.com/Onixarts/Hapcanuino/wiki)
+- [Features](https://github.com/Onixarts/Hapcanuino/wiki/Features)
 - [Hardware requirements](https://github.com/Onixarts/Hapcanuino/wiki/Hardware-requirements)
 - Examples
     - [HelloWorld](https://github.com/Onixarts/Hapcanuino/wiki/HelloWorld)
