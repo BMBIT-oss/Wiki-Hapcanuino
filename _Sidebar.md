@@ -1,3 +1,3 @@
 - [Home](https://github.com/Onixarts/Hapcanuino/wiki)
 - Examples
-    - HelloWorld
+    - [HelloWorld](https://github.com/Onixarts/Hapcanuino/wiki/HelloWorld)
