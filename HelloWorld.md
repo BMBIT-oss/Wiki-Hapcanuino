@@ -10,7 +10,7 @@ For base required hardware see [Hardware requirements](https://github.com/Onixar
 
 ## Basic setup
 After proper MCP CAN module connection to Arduino board and Hapcan bus, load the Sketch into Arduino.
-Next, You may want to [configure the device](../Configuring-device) with Hapcan programmer.
+Next, You may want to [configure the device](https://github.com/Onixarts/Hapcanuino/wiki/Configuring-device) with Hapcan programmer.
 
 
 ## Code explanation
