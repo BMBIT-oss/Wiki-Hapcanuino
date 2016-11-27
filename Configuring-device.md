@@ -18,7 +18,7 @@ You can open processor memory window for Hapcanuino device. First, switch to EEP
 
 Memory purpose from 0xF00000 to 0xF0004F is the same as in original Hardware. According to limited box count to 32 only first 4 bytes of Enable Box Bits are used by Hapcanuino. This memory addresses are translated by Hapcanuino to Arduino addresses, so if Hapcan programmer addressing bytes from 0xF00000, Hapcanuino accessing EEPROM.
 
-At the 0xF00080 address the first box configuration is located. Each box has 19 Bytes length to reduce EEPROM usage, so it is a little bit hard to identify boxes. You can calculate starting memory address like this: address = 128+(boxNumber-1)*19, where boxNumber is 1-32 and convert it to HEX.
+At the 0xF00080 address the first box configuration is located. Each box has 19 Bytes length to reduce EEPROM usage, so it is a little bit hard to identify boxes. You can calculate starting memory address like this: address = 128+(boxNumber-1)*19, where boxNumber is 1-32 and convert it to HEX. You can also use calculator in [Excel memory file](https://github.com/Onixarts/Hapcanuino/blob/master/docs/Hapcanuino_1-50-0-0-memory.xlsx).
 
 After box memory is being edited, click **Save EEPROM** button to store data in Hapcanuino.
 
@@ -62,6 +62,8 @@ Operators for each 4 bytes are located as follows:
 <7>|<6>|<5>|<4>|<3>|<2>|<1>|<0>
 ---|---|---|---|---|---|---|---
 Byte 4 A|Byte 4 B|Byte 3 A|Byte 3 B|Byte 2 A|Byte 2 B|Byte 1 A|Byte 1 B
+
+There are little calculator helper in [Excel memory file](https://github.com/Onixarts/Hapcanuino/blob/master/docs/Hapcanuino_1-50-0-0-memory.xlsx) to compute proper value for operator bytes.
 
 #### Operator Example
 Assuming we want call instruction number 4 on our device, each day on 8:00 AM, we want to match Hapcan's time frame sent by [Ethernet module](http://hapcan.com/devices/universal/univ_3/univ_3-102-0-x/index.htm) which is node 1 in group 1. The message sent by this module will looks like this:
