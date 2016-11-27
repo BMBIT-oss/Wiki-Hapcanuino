@@ -20,6 +20,8 @@ Memory purpose from 0xF00000 to 0xF0004F is the same as in original Hardware. Ac
 
 At the 0xF00080 address the first box configuration is located. Each box has 19 Bytes length to reduce EEPROM usage, so it is a little bit hard to identify boxes. You can calculate starting memory address like this: address = 128+(boxNumber-1)*19, where boxNumber is 1-32 and convert it to HEX.
 
+After box memory is being edited, click **Save EEPROM** button to store data in Hapcanuino.
+
 ### Box structure
 
 Byte|meaning
@@ -60,3 +62,22 @@ Operators for each 4 bytes are located as follows:
 <7>|<6>|<5>|<4>|<3>|<2>|<1>|<0>
 ---|---|---|---|---|---|---|---
 Byte 4 A|Byte 4 B|Byte 3 A|Byte 3 B|Byte 2 A|Byte 2 B|Byte 1 A|Byte 1 B
+
+#### Operator Example
+Assuming we want call instruction number 4 on our device, each day on 8:00 AM, we want to match Hapcan's time frame sent by [Ethernet module](http://hapcan.com/devices/universal/univ_3/univ_3-102-0-x/index.htm) which is node 1 in group 1. The message sent by this module will looks like this:
+
+30|00|01|01|FF|16|11|27|07|08|00|00
+---|---|---|---|---|---|---|---|---|---|---|---
+msg type H|msg type L|node|group|FF|year|month|date|day|hour|min|sec
+
+So in first 12 box bytes we can put this message, and then in operators bytes store values to match first 4 bytes (time frame 0x3000, node and group must match, so put (01=must equal) `01 01 01 01` = 55 hex in Byte 13 of box config. Next there are 8 data bytes, and we want to ignore everything that is not matter, leaving hour and minute bytes that must be equal to 8:00 AM. So we have (00=ignore byte) `00 00 00 00` = 0 hex into byte 14 and `00 01 01 00` = 14 hex into byte 15. In byte 16 we have to put our instruction so put 04. Params in this case are irrelevant so we left default FF value.
+
+The whole box config should look like this:
+```
+30 00  01 01  FF 16 11 27 07 08 00 00 | 55 00 14 | 04 FF FF FF
+```
+In case we are ignoring some bytes we could also configure this like that:
+```
+30 00  01 01  FF FF FF FF FF 08 00 FF | 55 00 14 | 04 FF FF FF
+```
+
