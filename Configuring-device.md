@@ -44,4 +44,19 @@ Byte|meaning
 18|Instruction param 2
 19|Instruction param 3
 
+Bytes 1-12 describes Hapcan Message. Operator bytes 13-15 determines conditions for comparing message bytes. Instruction and params are send to the users firmware function if all message bytes satisfy operator conditions.
 
+#### Operators
+One operator byte stores 4 operators for subsequent message bytes. There are three operators available:
+
+Bit A|Bit B|meaning
+---|---|---
+0|0|Ignore byte
+0|1|Input message byte must be equal to this in box
+1|0|Input message byte must be different from this in box
+
+Operators for each 4 bytes are located as follows:
+
+<7>|<6>|<5>|<4>|<3>|<2>|<1>|<0>
+---|---|---|---|---|---|---|---
+Byte 4 A|Byte 4 B|Byte 3 A|Byte 3 B|Byte 2 A|Byte 2 B|Byte 1 A|Byte 1 B
