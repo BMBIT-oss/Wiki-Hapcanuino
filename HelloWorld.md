@@ -50,3 +50,30 @@ void setup()
 	pinMode(PIN7, OUTPUT);
 }
 ```
+There is also a line to set PIN7 as an output to drive LED, but this is example specific code. You should configure the rest of Your device here as all Arduino Sketches do.
+
+`loop()` function requires only one line to make Hapcanuino work.
+```C++
+void loop()
+{
+	hapcanDevice.Update();
+}
+```
+The `Update()` method processes the received messages from RX buffer, handle system messages, checks normal messages if any of them match box criteria and if so, calls the `DoInstruction(...)` function.
+
+Simplest implementation of `DoInstruction(..)` function is to put `switch` code and perform operations according to instrucion parameter.
+```C++
+void DoInstruction(Hapcan::HapcanMessage* message, byte instruction, byte param1, byte param2, byte param3)
+{
+	switch (instruction)
+	{
+	case 1: digitalWrite(PIN7, digitalRead(PIN7) == LOW);
+		break;
+		// TODO: place other instructions here
+	}
+}
+```
+In this case, when box configuration calls instruction 1 it toggle LED in PIN7.
+
+Callback function receives pointer to `HapcanMessage` which is the whole message receives from CAN bus. You can use its data in your code, for example to get current time send by [Ethernet module](http://hapcan.com/devices/universal/univ_3/univ_3-102-0-x/index.htm) each minute.
+Instruction and three params are defined in box that meets message criteria. These params are stored in EEPROM and can be configured using Hapcan programmer's EEPROM HEX editor. Dedicated solution will be available asap.
