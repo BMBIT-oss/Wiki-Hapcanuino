@@ -7,6 +7,8 @@ Hapcanuino imitates Hapcan's device but it still has an Arduino bootloader. Data
 ## Using Hapcan programmer
 When Hapcanuino device is connected to Hapcan network, it can be found by Hapcan programmer. You can use this software to configure Hapcanuino device.
 
+[[img/hapcan-programmer-search.png|Hapcan programmer with Hapcanuino device]]
+
 ### What Hapcanuino can do
 - Handling all [system messages](http://hapcan.com/devices/universal/univ_3/index.htm)
 - EEPROM programming (in programming mode Hapcan's addresses are translated to Arduino's)
