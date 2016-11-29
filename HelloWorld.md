@@ -24,8 +24,9 @@ Frame: 0x303  	Node (3,2)		data: FF FF 07 40 07 FF FF FF
 Frame: 0x302  	Node (2,1)		data: FF FF 05 00 FF FF 10 00 
 Frame: 0x303  	Node (3,2)		data: FF FF 87 40 07 FF FF FF 
 Frame: 0x303  	Node (3,2)		data: FF FF 07 40 07 FF FF FF 
-Frame: 0x303  	Node (3,2)		data: FF FF 07 40 21 FF FF FF 
+Frame: 0x303  	Node (3,2)		data: FF FF 07 40 21 FF FF FF   <- this message triggers box 1
 > Accepted box: 1 instr: 1
+Frame: 0x333  	Node (3,3)		data: FF FF 07 01 FF FF FF FF   <- module response with current LED status
 Frame: 0x303  	Node (3,2)		data: FF FF 87 40 21 FF FF FF 
 ```
 In this particular example You would see message frames received by device, and one accepted message configured in box 1 to fire instruction number 1.
@@ -84,13 +85,24 @@ void DoInstruction(Hapcan::HapcanMessage* message, byte instruction, byte param1
 {
 	switch (instruction)
 	{
-	case 1: digitalWrite(PIN7, digitalRead(PIN7) == LOW);
+	case 1: 
+	{
+		// toggle LED
+		digitalWrite(PIN7, digitalRead(PIN7) == LOW);
+
+		// send message confirms status change of frame type 0x333 (custom)
+		Hapcan::HapcanMessage statusMessage(0x333, false);
+		statusMessage.m_data[2] = 7;	// set up byte 3 as 7
+		statusMessage.m_data[3] = digitalRead(PIN7) == LOW ? 0x00 : 0x01; // set byte 4 to 0 = LED OFF, 1 = LED ON
+		hapcanDevice.Send(statusMessage);
+
 		break;
-		// TODO: place other instructions here
+	}
+	// case 2: place another instruction code here; break;
 	}
 }
 ```
-In this case, when box configuration calls instruction 1 it toggle LED in PIN7.
+In this case, when box configuration calls instruction 1 it toggles LED in PIN7. It also sends new `HapcanMessage` with current status of LED with frame type of 0x333 to the CAN bus `FF FF 07 0X FF FF FF FF`, where X = 1 when LED in ON, and 0 when LED is OFF. This way other Hapcan devices know that LED state has changed and can process this information.
 
 Callback function receives pointer to `HapcanMessage` which is the whole message receives from CAN bus. You can use its data in your code, for example to get current time send by [Ethernet module](http://hapcan.com/devices/universal/univ_3/univ_3-102-0-x/index.htm) each minute.
 Instruction and three params are defined in box that meets message criteria. These params are stored in EEPROM and can be configured using Hapcan programmer's EEPROM HEX editor. Dedicated solution will be available asap.
