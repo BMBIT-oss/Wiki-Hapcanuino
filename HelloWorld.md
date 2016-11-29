@@ -78,7 +78,7 @@ void loop()
 ```
 The `Update()` method processes the received messages from RX buffer, handle system messages, checks normal messages if any of them match box criteria and if so, calls the `DoInstruction(...)` function.
 
-Simplest implementation of `DoInstruction(..)` function is to put `switch` code and perform operations according to instrucion parameter.
+Simplest implementation of `DoInstruction(..)` function is to put `switch` code and perform operations according to instruction parameter.
 ```C++
 void DoInstruction(Hapcan::HapcanMessage* message, byte instruction, byte param1, byte param2, byte param3)
 {
