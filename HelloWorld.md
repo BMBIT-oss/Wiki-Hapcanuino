@@ -12,6 +12,23 @@ For base required hardware see [Hardware requirements](https://github.com/Onixar
 After proper MCP CAN module connection to Arduino board and Hapcan bus, load the Sketch into Arduino.
 Next, You may want to [configure the device](https://github.com/Onixarts/Hapcanuino/wiki/Configuring-device) with Hapcan programmer.
 
+## First run
+In Arduino's Serial port monitor You should see some debug messages and CAN traffic. 
+```
+Opening port
+Port open
+Hapcanuino device starting...
+Entering Configuration Mode Successful!
+Setting Baudrate Successful!
+Frame: 0x303  	Node (3,2)		data: FF FF 07 40 07 FF FF FF 
+Frame: 0x302  	Node (2,1)		data: FF FF 05 00 FF FF 10 00 
+Frame: 0x303  	Node (3,2)		data: FF FF 87 40 07 FF FF FF 
+Frame: 0x303  	Node (3,2)		data: FF FF 07 40 07 FF FF FF 
+Frame: 0x303  	Node (3,2)		data: FF FF 07 40 21 FF FF FF 
+> Accepted box: 1 instr: 1
+Frame: 0x303  	Node (3,2)		data: FF FF 87 40 21 FF FF FF 
+```
+In this particular example You would see message frames received by device, and one accepted message configured in box 1 to fire instruction number 1.
 
 ## Code explanation
 
