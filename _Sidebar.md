@@ -4,3 +4,4 @@
 - [[Configuring device]]
 - Examples
     - [[HelloWorld]]
+- [[Class library reference]]
