@@ -8,8 +8,7 @@ Begin|Initiate CAN module, sets up external interrupt, reads config from EEPROM.
 Update|Read RX buffer and processes message. Call this method in ino `loop()` function. Method should be called as often as possible.
 Send|Send `HapcanMessage` passed as argument. Node and group bytes are set from device's current configuration.
 ReceiveAnswerMessages|Set if device should process messages marked as answer. Default is not.
-OnMessageAcceptedEvent|Set `MessageAcceptedEventDelegate` callback function to be called when received HAPCAN message meet box criteria. This callback is used in ino file (simple Hapcanuino device implementation).
-OnControlMessageEvent|Set `ControlMessageEventDelegate` callback function to be called when control frame is received. This message contains instruction for module to execute (direct control).
+SetExecuteInstructionDelegate|Set `ExecuteInstructionDelegate` callback function to be called when received HAPCAN message meet box criteria or direct control message is received (0x10A). This callback is used in ino file (simple Hapcanuino device implementation).
 OnCanReceived|**Don't use this method directly**. It's for internal use only.
 OnCanReceivedDispatcher|**Don't use this static method directly**. It's for internal use only.
 
