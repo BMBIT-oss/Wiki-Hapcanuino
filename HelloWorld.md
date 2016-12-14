@@ -64,7 +64,15 @@ void ExecuteInstruction(byte instruction, byte param1, byte param2, byte param3,
 ```
 You can put the function body above `setup()` function, but in this example `setup()` function is localized in very top, so compiler must know what `ExecuteInstruction(..)` function is before use it.
 
-Next, the `setup()` function itself. In this function You call `hapcanDevice.Begin()` method, which configures MCP CAN module to work with. You also need to pass pointer to the callback `ExecuteInstruction(..)` function by `hapcanDevice.SetExecuteInstructionDelegate(ExecuteInstruction)` method.
+There is one more important callback function which You probably need to implement (but You don't have to). The `OnStatusRequest` function is called when status request message is received (frame type 0x109). I will talk about this function later. Now just put:
+
+```C++
+void OnStatusRequest(byte requestType, bool isAnswer);
+```
+There is also a `LED7Info` constant definition in `StatusRequestType` namespace.
+
+Next, the `setup()` function itself. In this function You call `hapcanDevice.Begin()` method, which configures MCP CAN module to work with. You also need to pass pointer to the callback `ExecuteInstruction(..)` function by `hapcanDevice.SetExecuteInstructionDelegate(ExecuteInstruction)` and `SetStatusRequestDelegate(OnStatusRequest)` methods if You want Your module to handle Your own messages.
+
 ```C++
 void setup()
 {
@@ -76,6 +84,9 @@ void setup()
 
 	//set callback function to be called, when received message match box criteria or direct control message is received
 	hapcanDevice.SetExecuteInstructionDelegate(ExecuteInstruction);
+
+	// Callback function to be called, when received status request message
+	void OnStatusRequest(byte requestType, bool isAnswer);
 
 	// demo example, set pin7 as output
 	pinMode(PIN7, OUTPUT);
@@ -118,15 +129,13 @@ void ExecuteInstruction(byte instruction, byte param1, byte param2, byte param3,
 	// check, if LED change instruction was executed and send message to Hapcan
 	if (ledStateChanged)
 	{
-		// send message confirmed status change of frame type 0x333 (custom)
-		Hapcan::HapcanMessage statusMessage(0x333, false);
-		statusMessage.m_data[2] = 7;	// set up byte 3 as 7
-		statusMessage.m_data[3] = digitalRead(PIN7) == LOW ? 0x00 : 0x01; // set byte 4, 1 = LED ON, 0 = LED OFF
-		hapcanDevice.Send(statusMessage);
+		// send status frame after change of LED7 to notify other Hapcan modules. 
+		// Notice second (isAnswer) parameter is set to false, because we call it directly after status change
+		OnStatusRequest(StatusRequestType::LED7Info, false);
 	}
 }
 ```
-In this case, when box configuration calls instruction 3 it toggles LED in PIN7. It also sends new `HapcanMessage` with current status of LED with frame type of 0x333 to the CAN bus `FF FF 07 0X FF FF FF FF`, where X = 1 when LED in ON, and 0 when LED is OFF. This way other Hapcan devices know that LED state has changed and can process this information.
+In this case, when box configuration calls instruction 3 it toggles LED in PIN7. It also calls `OnStatusRequest` function which is also a callback function being called when status request message is received. We pass additional information to this function to send only LED7Info status, and set response flag to 0 in sended message (isAnswer = false).
 
 Callback function receive instruction and three parameters that are defined in box that meets message criteria. Parameters can also be send from PC via direct control message. For example, to direct toggle LED, PC should send this message:
 ```
@@ -135,3 +144,37 @@ Callback function receive instruction and three parameters that are defined in b
 where `10 A0` is the type of direct control frame, `F0 F0` is the PC node and group, `03 FF` is the instruction number 3 and first parameter, `20 09` is the Hapcanuino's node and group, `FF FF` are parameters 2 and 3, and last `FF FF` are unused in Hapcanuino. Instruction with parameters can occupy 4 bytes only, same as in box configuration.
 
 Callback function receives also a pointer to `HapcanMessage` which is the whole message receives from CAN bus. You can use its data in your code, for example to get current time send by [Ethernet module](http://hapcan.com/devices/universal/univ_3/univ_3-102-0-x/index.htm) each minute. In case of direct control message, You can pass more parameters to instruction using last bytes.
+
+### Handling status request and status messages
+
+Function `OnStatusRequest(...)` can be called directly from Your code - when one of the device state is changed, in this example it is called from `ExecuteInstruction(..)` function after LED status changed. Then You call it with `isAnswer` parameter set to false, because it is not an answer, it is just a status changed information.
+Function is also called by the `HapcanDevice` class when status request message is received. Then the `isAnswer` parameter is set to true. You should use `isAnswer` when creating new `HapcanMessage`.
+Other parameter is the `requestType`. You can use it to determine which status should be send. For example if Your device has 8 LED diodes instead of 1 as in this example, You may want to send only one status change message that match LED which has changed. You can point which LED status will be send here. `HapcanDevice` will call this method with `requestType` set to `StatusRequestType::SendAll` which is value of 0. So Your other LED channels can be 1,2,3 and so on.
+
+```C++
+void OnStatusRequest(byte requestType, bool isAnswer)
+{
+	// check if we should send informations about all the functions in module
+	bool sendAll = requestType == Hapcan::Message::System::StatusRequestType::SendAll;
+
+	// if we need send all info or just LED7Info status
+	if (sendAll || requestType == StatusRequestType::LED7Info)
+	{
+		// send message status of frame type 0x333 (custom). 
+		// Use isAnswer variable here, because it will be set to true when it is a response for StatusRequest message (0x109)
+		Hapcan::HapcanMessage statusMessage(0x333, isAnswer);
+		statusMessage.m_data[2] = 7;	// set up byte 3 as 7
+		statusMessage.m_data[3] = digitalRead(PIN7) == LOW ? 0x00 : 0x01; // set byte 4, 1 = LED ON, 0 = LED OFF
+		hapcanDevice.Send(statusMessage);
+	}
+
+	// Add another status messages here...
+	// if (sendAll || requestType == StatusRequestType::Your_another_defined_status)
+	//{
+	//}
+}
+```
+The `sendAll` variable is set to true if we need to send whole module status (for example 8 LED channels).
+
+In current example only one status info is send on `StatusRequestType::LED7Info` type or `SendAll` type.
+New `HapcanMessage` with current status of LED with frame type of 0x333 is send to the CAN bus `FF FF 07 0X FF FF FF FF`, where X = 1 when LED in ON, and 0 when LED is OFF. This way other Hapcan devices know that LED state has changed and can process this information or status asking device (PC) receives whole status info.
