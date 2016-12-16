@@ -14,3 +14,18 @@ OnCanReceived|**Don't use this method directly**. It's for internal use only.
 OnCanReceivedDispatcher|**Don't use this static method directly**. It's for internal use only.
 
 ##HapcanMessage class
+
+Method|Description
+---|---
+HapcanMessage()|Default Constructor
+HapcanMessage(unsigned long id, byte* buffer)|Constructor used when new message is received. It takes CAN message ID and 8 bytes buffer array and constructs `HapcanMessage` object.
+HapcanMessage(unsigned int frameType, bool isAnswer, byte node, byte group)| Constructor used internally from Hapcan Device class to create response messages.
+HapcanMessage(unsigned int frameType, bool isAnswer)|Constructor used from user code (ino file). Same as previous but no node and group parameters are available. These parameters will be filled automatically when sending message.
+void Prepare(byte node, byte group)|Fill node and group if wasn't specified. 
+byte GetFrameTypeCategory()|Returns message category. Used by HapcanDevice to process system messages or normal messages.
+unsigned int GetFrameType()|Returns frame type. This method is used by HapcanDevice to recognize current message.
+bool IsAnswer()|Returns true if message is an answer for request.
+void SetAnswer()|Set answer bit in message.
+byte GetNode()|Returns node number from message
+byte GetGroup()|Returns node group from message
+void PrintToSerial()|Send Message to Serial port. Used for debug purpose.
