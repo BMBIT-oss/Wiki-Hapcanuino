@@ -4,4 +4,5 @@
 - [[Configuring device]]
 - Examples
     - [[HelloWorld]]
+- [[EEPROM handling]]
 - [[Class library reference]]
