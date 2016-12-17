@@ -92,9 +92,9 @@ const int Hapcan::Config::Firmware::FirmwareRevision = 0; // firmware revision
 
 **Firmware::ApplicationVersion** - it is Your hardware application version. If You make some hardware changes in Your existing module (for example, add more inputs to analog input module) assign new number here.
 
-**Firmware::FirmwareVersion** - When changing code for Your existing device that delivers new functions make sure You assign a new version here.
+**Firmware::FirmwareVersion** - When changing code for Your existing device that delivers new functions make sure You assign a new version here, so any external programming tool can handle different version of EEPROM structure for example.
 
-**Firmware::FirmwareRevision** - When fixing some bugs for Your existing device make sure You assign a new revision here. You can also put here a new build number.
+**Firmware::FirmwareRevision** - You can put code revision here. This value is not returned for any system message. You can use it internally.
 
 In the simplest way of implementing device all your specific code goes into sketch .ino file. So You want to know when Hapcanuino receives a message that meet criteria defined in boxes or a direct control message is received. To do so, You first declare a callback function, that will be called by internal Hapcanuino code.
 ```C++
