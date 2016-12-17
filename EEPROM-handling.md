@@ -2,7 +2,7 @@
 
 Hapcanuino stores some important data in EEPROM, just like the original Hapcan device does. Data structure for some data are important, because EEPROM memory can be programmed with Hapcan programmer software. There are also box configuration stored in EEPROM so **You shouldn't access EEPROM directly** and store data - it may be dangerous if You overwrite some important data. 
 
-Memory structure is described in [[Memory.xsl|https://github.com/Onixarts/Hapcanuino/tree/master/docs]] file.
+Memory structure is described in [[Memory.xlsx|https://github.com/Onixarts/Hapcanuino/tree/master/docs]] file.
 
 To make it easier to store and reading configuration data `HapcanDevice` class provide this methods:
 
