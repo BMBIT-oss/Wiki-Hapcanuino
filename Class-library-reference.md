@@ -10,6 +10,8 @@ Send|Send `HapcanMessage` passed as argument. Node and group bytes are set from 
 ReceiveAnswerMessages|Set if device should process messages marked as answer. Default is not.
 SetExecuteInstructionDelegate|Set `ExecuteInstructionDelegate` callback function to be called when received HAPCAN message meet box criteria or direct control message is received (0x10A). This callback is used in ino file (simple Hapcanuino device implementation).
 SetStatusRequestDelegate|Set `StatusRequestDelegate` callback function to be called when status request message is received (0x109). You can call this function directly to send status change information. In this case pass `isAnswer` as false.
+bool GetConfigByte(byte configBank, byte byteNumber, byte& value)|Read one byte from specified config bank. If byte number exceeds selected bank method returns false. Read more about settings in [[EEPROM handling|EEPROM handling]]
+bool SetConfigByte(byte configBank, byte byteNumber, byte value)|Set one byte in specified config bank. If byte number exceeds selected bank method returns false. Note, that EEPROM has limited save cycles to about 100 000. Read more about settings in [[EEPROM handling|EEPROM handling]]
 OnCanReceived|**Don't use this method directly**. It's for internal use only.
 OnCanReceivedDispatcher|**Don't use this static method directly**. It's for internal use only.
 
