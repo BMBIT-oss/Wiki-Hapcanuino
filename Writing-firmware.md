@@ -1,8 +1,8 @@
-It is strongly recomended to know the basics of [[SubModules]] concept, before reading this topic.
+It is strongly recommended to know the basics of [[SubModules]] concept, before reading this topic.
 
 ## Assumptions
 
-We have 4 relays board for Arduino and we wan't to create new Hapacnuino 4 relay device, that will work with Hapcan system.
+We have 4 relays board for Arduino and we want to create new Hapacnuino 4 relay device, that will work with Hapcan system.
 
 ## Device firmware - solution 1
 
@@ -46,7 +46,7 @@ there are other SubModules defined to shift the default instruction parameter, s
 - On (0x01)
 - Toggle (0x02)
 
-If You add another type of SubModule which also has instruction started with 0x00 it will overlap the `HapcanRelay` instrucion. That will cause problems. In this case when declaring another 
+If You add another type of SubModule which also has instruction started with 0x00 it will overlap the `HapcanRelay` instruction. That will cause problems. In this case when declaring another 
 SubModule You can shift all the instructions, for example:
 
 ```C++
@@ -61,18 +61,18 @@ In `setup()` function call `Init()` on each SubModule. It will setup IO accordin
 ```C++
 void setup()
 {
-	Serial.begin(115200);
-	Serial.println("Hapcanuino device starting...");
+    Serial.begin(115200);
+    Serial.println("Hapcanuino device starting...");
 
-	hapcanDevice.Begin();
+    hapcanDevice.Begin();
 
-	hapcanDevice.SetExecuteInstructionDelegate(ExecuteInstruction);
-	hapcanDevice.SetStatusRequestDelegate(OnStatusRequest);
+    hapcanDevice.SetExecuteInstructionDelegate(ExecuteInstruction);
+    hapcanDevice.SetStatusRequestDelegate(OnStatusRequest);
 
-	// submodules
-	out1.Init();
-	out2.Init();
-	out3.Init();
+    // submodules
+    out1.Init();
+    out2.Init();
+    out3.Init();
     out4.Init();
 }
 
@@ -83,12 +83,12 @@ void setup()
 ```C++
 void loop()
 {
-	hapcanDevice.Update();
+    hapcanDevice.Update();
 
-	out1.Update();
-	out2.Update();
-	out3.Update();
-    out34Update();
+    out1.Update();
+    out2.Update();
+    out3.Update();
+    out4.Update();
 }
 ```
 
@@ -98,22 +98,22 @@ Events implementation is very similar too.
 void ExecuteInstruction(byte instruction, byte param1, byte param2, byte param3, Hapcan::HapcanMessage& message)
 {
     out1.ExecuteInstruction(instruction, param1, param2, param3, message);
-	out2.ExecuteInstruction(instruction, param1, param2, param3, message);
-	out3.ExecuteInstruction(instruction, param1, param2, param3, message);
+    out2.ExecuteInstruction(instruction, param1, param2, param3, message);
+    out3.ExecuteInstruction(instruction, param1, param2, param3, message);
     out4.ExecuteInstruction(instruction, param1, param2, param3, message);
 }
 
 void OnStatusRequest(byte requestType, bool isAnswer)
 {
-	out1.SendStatus(isAnswer);
-	out2.SendStatus(isAnswer);
-	out3.SendStatus(isAnswer);
+    out1.SendStatus(isAnswer);
+    out2.SendStatus(isAnswer);
+    out3.SendStatus(isAnswer);
     out4.SendStatus(isAnswer);
 }
 ```
 
-You can analyze instruction, params here by writing ifs, switch-case etc but it is much clearlier to redirect this job to the SubModules. If instruction match these defines for `HapcanRelay`
-and correct channel is persent in params the output will react for this instruction and also automatic message will be send to the Hapcan BUS. You don't need to worry about this.
+You can analyse instruction, params here by writing ifs, switch-case etc but it is much clearer to redirect this job to the SubModules. If instruction match these defines for `HapcanRelay`
+and correct channel is present in params the output will react for this instruction and also automatic message will be send to the Hapcan BUS. You don't need to worry about this.
 
 ## Device firmware - solution 2 (recommended)
 
