@@ -2,7 +2,9 @@
 - [[Features]]
 - [[Hardware requirements]]
 - [[Configuring device]]
+- [[SubModules]]
 - Examples
     - [[HelloWorld]]
 - [[EEPROM handling]]
+- [[Writing firmware]]
 - [[Class library reference]]
