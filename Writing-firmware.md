@@ -54,7 +54,7 @@ Hapcan::SubModule::HapcanButton::Module button1(hapcanDevice, 1, 0x10);
 ```
 will shift all instructions of the `HapcanButton` SubModule to value of 0x10. So instead of calling instruction 0x02 You should call instruction 0x12. 0x02 will call `HapcanRelay` instruction 0x02 (Toggle).
 
-[[img/instructionShift.jpg|Instruction shift]]
+[[img/instructionShift.png|Instruction Shift]]
 
 In `setup()` function call `Init()` on each SubModule. It will setup IO according to constructor definition.
 
