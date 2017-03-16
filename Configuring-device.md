@@ -1,4 +1,4 @@
-You can use [Hapcan programmer](http://hapcan.com/software/hap/) software to set some parameters of Hapcanuino device, but because of Arduino's architecture, not all features are available. **Hapcan programmer** don't know Your device, so it can't control it directly (You can still send direct commands to Your device using Monitor window), it can't display any specific window for configure Your device either. (Solution for that will be available in a while).
+You can use [Hapcan programmer](http://hapcan.com/software/hap/) software to set some parameters of Hapcanuino device, but because of Arduino's architecture, not all features are available. **Hapcan programmer** don't know Your device, so it can't control it directly (You can still send direct commands to Your device using Monitor window), it can't display any specific window for configure Your device either. (Solution for that will be available in a while. Currently work is in progress on new [Hapcan Programmer 2](https://github.com/Onixarts/HapcanProgrammer) that will solve custom devices programming).
 
 First, search Hapcan network for available devices. 
 
