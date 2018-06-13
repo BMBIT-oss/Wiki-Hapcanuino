@@ -4,7 +4,7 @@ It is strongly recomended to read this tutorial from top to bottom, starting wit
 
 ## Tutorial
 - [[HelloWorld]] - everything You need to know to start using Hapcanuino
-- [[DirectControl]] - controling the device using direct control message (0x10A)
+- [[Direct Control]] - controling the device using direct control message (0x10A)
 - [[Status-Request]] - sending device status messages
 
 To be continued...
