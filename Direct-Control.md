@@ -10,7 +10,7 @@ This example demonstrate basics of module control using direct control message s
 
 Follow the [[HelloWorld]] example setup and requirements. Connect LED to `PIN7` with 1kOhm resistor like below.
 
-![Direct control fritzing scheme](/img\direct-control-fritzing.png)
+![Direct control fritzing scheme](/img/direct-control-fritzing.png)
 
 ## Code explanation
 
@@ -72,7 +72,7 @@ LED will turn ON if instruction is 0x01, turn OFF when 0x02 and toggle on 0x03.
 
 To send this control message in Hapcan Programmer use monitor window.
 
-![Hapcan programmer send control frame](/img\hapcan-programmer-send-control-frame.png)
+![Hapcan programmer send control frame](/img/hapcan-programmer-send-control-frame.png)
 
 Choose 0x10A frame, then make sure You put proper group and node instead of XX XX bytes, and set instruction at byte 5 (I've put 0x03 here for toggle).
 Each time You send this message to the BUS, LED will toggle.
