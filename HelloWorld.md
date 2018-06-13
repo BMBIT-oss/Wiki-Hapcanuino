@@ -78,7 +78,7 @@ const byte Hapcan::Config::Firmware::ApplicationVersion = 0;	// application (har
 const byte Hapcan::Config::Firmware::FirmwareVersion = 1;		// firmware version
 const int Hapcan::Config::Firmware::FirmwareRevision = 0; // firmware revision
 ```
-You can find deteiled information about each constant in [[Configuring hardware]] topic.
+You can find detailed information about each constant in [[Configuring hardware]] topic.
 
 In `setup()` function the only required method is `hapcanDevice.Begin()`.
 
@@ -102,7 +102,7 @@ void loop()
 }
 ```
 
-One thing You should avoid is to put `delay()` function inside `loop()`, because that will cause Hapncanuino stop processing the incomming messages. The `loop()` function should be called as frequent as possible.
+One thing You should avoid is to put `delay()` function inside `loop()`, because that will cause Hapcanuino stops processing the incomming messages. The `loop()` function should be called as frequent as possible.
 
 If You need to run some other tasks with some longer period consider using [Onixarts TaskManager](https://github.com/Onixarts/Onixarts_TaskManager) or other Onixarts Arduino libraries. All these libraries share the same concept - no delaying in `loop()` function, just `Update()` all the objects.
 
