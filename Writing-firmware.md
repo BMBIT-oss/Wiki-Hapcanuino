@@ -4,7 +4,7 @@ It is strongly recommended to know the basics of [[SubModules]] concept, before 
 
 We have 4 relays board for Arduino and we want to create new Hapacnuino 4 relay device, that will work with Hapcan system.
 
-## Device firmware - solution 1
+## Device firmware - solution 1 (not recommended, but still working)
 
 In main ino file, first of all You want to include all required libraries.
 
@@ -27,7 +27,7 @@ using namespace Onixarts::Tools;
 
 Hapcan::HapcanDevice hapcanDevice;
 
-void ExecuteInstruction(byte instruction, byte param1, byte param2, byte param3, Hapcan::HapcanMessage& message);
+void ExecuteInstruction(Hapcan::InstructionStruct& exec, Hapcan::HapcanMessage& message);
 void OnStatusRequest(byte requestType, bool isAnswer);
 ```
 
@@ -95,12 +95,12 @@ void loop()
 Events implementation is very similar too.
 
 ```C++
-void ExecuteInstruction(byte instruction, byte param1, byte param2, byte param3, Hapcan::HapcanMessage& message)
+void ExecuteInstruction(Hapcan::InstructionStruct& exec, Hapcan::HapcanMessage& message)
 {
-    out1.ExecuteInstruction(instruction, param1, param2, param3, message);
-    out2.ExecuteInstruction(instruction, param1, param2, param3, message);
-    out3.ExecuteInstruction(instruction, param1, param2, param3, message);
-    out4.ExecuteInstruction(instruction, param1, param2, param3, message);
+    out1.ExecuteInstruction(exec, message);
+    out2.ExecuteInstruction(exec, message);
+    out3.ExecuteInstruction(exec, message);
+    out4.ExecuteInstruction(exec, message);
 }
 
 void OnStatusRequest(byte requestType, bool isAnswer)

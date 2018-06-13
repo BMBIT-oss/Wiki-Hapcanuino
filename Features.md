@@ -21,8 +21,8 @@ When Hapcanuino device is connected to Hapcan network, it can be found by Hapcan
 ### What Hapcanuino can't do
 - No firmware update via CAN network (must use USB connection)
 - No FLASH memory reading and writing
-- No power supply correct information returned
-- No module text information support for now
+- No power supply correct information returned (requires some additional hardware on Arduino board)
+- No module text information support (EEPROM is used for box config storage)
 
 ## Other features
-- 32 boxes available (128 in original device), stored in EEPROM
+- 28 boxes available in Arduino with 1kB EEPROM (128 boxes in original device)

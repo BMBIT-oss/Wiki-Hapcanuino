@@ -1,2 +1,2 @@
 [[img/hapcanuino-banner.jpg|Hapcanuino]]
-**Hapcanuino** is a library that simplifies creation of Arduino based modules for Hapcan Home Automation Project. Hapcan uses CAN bus to communicate between modules which are made with PIC microcontrollers. Hapcanuino brings to Arduino (and AVR) users ability to easily creating Hapcan compatible modules.
+**Hapcanuino** is a library that simplifies creation of Arduino based modules for Hapcan Home Automation Project. Hapcan uses CAN bus to communicate between modules based on PIC microcontrollers. Hapcanuino brings to Arduino (and AVR) users ability to easily creating Hapcan compatible modules.

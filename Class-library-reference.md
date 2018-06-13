@@ -1,4 +1,4 @@
-##HapcanDevice class
+## HapcanDevice class
 Main class that handle HAPCAN messages receiving and sending. It also handles base system and programming messages. In short, this class makes Your sketch a Hapcan compatible device. There should be only one instance of this class declared.
 
 Method|Description
@@ -15,7 +15,7 @@ bool SetConfigByte(byte configBank, byte byteNumber, byte value)|Set one byte in
 OnCanReceived|**Don't use this method directly**. It's for internal use only.
 OnCanReceivedDispatcher|**Don't use this static method directly**. It's for internal use only.
 
-##HapcanMessage class
+## HapcanMessage class
 
 Method|Description
 ---|---

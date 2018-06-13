@@ -1,10 +1,13 @@
 - [Home](https://github.com/Onixarts/Hapcanuino/wiki)
 - [[Features]]
 - [[Hardware requirements]]
+- [[Configuring hardware]]
 - [[Configuring device]]
 - [[SubModules]]
-- Examples
+- [[Examples]]
     - [[HelloWorld]]
+    - [[Direct control]]
+    - [[Status request]]
 - [[EEPROM handling]]
 - [[Writing firmware]]
 - [[Class library reference]]
