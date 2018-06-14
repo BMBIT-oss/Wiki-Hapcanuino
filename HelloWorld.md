@@ -13,6 +13,12 @@ After proper MCP CAN module connection to Arduino board and Hapcan bus, load the
 
 MPC CAN module should be connected to SPI interface. Connect INT pin to PIN2 on Arduino, and CS to PIN10. It can be configured (see below).
 
+![Hapcanuino initial connections](img/hello-world-fritzing.png)
+
+Here, the MCP CAN module is connected to Arduino using ICSP connector. Two extra wires are connected also to `PIN10` (Chip select) and `PIN2` (Interrupt). 
+
+**Make sure** to connect ICSP to MCP CAN module properly, because there are many different MCP boards available which has different pin locations. The two orange wires are the CAN H and CAN L, which should be connected to Your Hapcan bus.
+
 ## First run
 In Arduino's Serial port monitor You should see CAN traffic from other Hapcan devices. Something like this:
 
