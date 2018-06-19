@@ -8,6 +8,7 @@
     - [[HelloWorld]]
     - [[Direct control]]
     - [[Status request]]
+    - [[Indirect control]]
 - [[EEPROM handling]]
 - [[Writing firmware]]
 - [[Class library reference]]
