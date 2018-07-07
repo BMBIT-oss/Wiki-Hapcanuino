@@ -5,6 +5,8 @@ It is strongly recomended to read this tutorial from top to bottom, starting wit
 ## Tutorial
 - [[HelloWorld]] - everything You need to know to start using Hapcanuino
 - [[Direct Control]] - controling the device using direct control message (0x10A)
-- [[Status-Request]] - sending device status messages
+- [[Status Request]] - sending device status messages
+- [[Indirect Control]] - linking the devices from Hapcan programmer
+- [[Submodule]] - the fastest way (recommended) for creating device firmware
 
 To be continued...

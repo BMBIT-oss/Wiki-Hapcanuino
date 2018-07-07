@@ -9,6 +9,7 @@
     - [[Direct control]]
     - [[Status request]]
     - [[Indirect control]]
+    - [[Submodule]]
 - [[EEPROM handling]]
 - [[Writing firmware]]
 - [[Class library reference]]

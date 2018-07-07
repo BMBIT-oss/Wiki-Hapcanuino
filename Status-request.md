@@ -48,7 +48,7 @@ void SendStatus(byte requestType, bool isAnswer)
 		// Prepare a standard Hapcan's Relay Message (0x302)
 		// Use isAnswer variable here, because it will be set to true when it is a response for StatusRequest message (0x109)
 		Hapcan::HapcanMessage statusMessage(Hapcan::Message::Normal::RelayMessage, isAnswer);
-		statusMessage.m_data[2] = 7;	// set up byte 3 as channel 7
+		statusMessage.m_data[2] = 1;	// set up byte 3 as channel 1 for example	
 		statusMessage.m_data[3] = digitalRead(PIN7) == LOW ? 0x00 : 0xFF; // set byte 4 (status, 0x00 = LED OFF, 0xFF = LED ON
 		hapcanDevice.Send(statusMessage);
 	}
@@ -96,7 +96,7 @@ In Arduino serial monitor You can see the same log as in Hapcan monitor.
 ```
 Frame: 0x109  	Node (240,240)		data: FF FF 03 03 FF FF FF FF 
 > StatusRequest
-Frame: 0x302 A	Node (3,3)		data: FF FF 07 00 FF FF FF FF 
+Frame: 0x302 A	Node (3,3)		data: FF FF 01 00 FF FF FF FF 
 ```
 
 How about, we use direct control message and toggle the LED ON and OFF. The device should send proper status message each time LED toggle occured.

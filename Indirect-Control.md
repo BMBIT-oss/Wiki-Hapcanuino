@@ -85,7 +85,7 @@ Below is the screen presents the whole box definition for this button message, e
 
 **Green part** is the operators definition for each activation frame byte. First 4 bytes are set to `0x01` which means that the first 4 bytes of received message must be equal to these in activation frame (message type `0x301` and sender node (1,3). Next two bytes may be ignored, so `0x00` operator is used. Then we want, to our device only react when button module send short click (`0xFC`) on button 3 (`0x03`). So again, we use `0x01` equality operator for these bytes. Other bytes may be ignored.
 
-**Blue part** is the instruction passed to the `ExecuteInstruction()` function, so we put here just value of `0x03` - which means toggle as we defined it earlier in function body.
+**Blue part** is the instruction passed to the `ExecuteInstruction()` function, so we put here just value of `0x02` - which means toggle as we defined it earlier in function body.
 
 After setting up a box, upload the changes to the processor and it should work.
 
@@ -93,17 +93,17 @@ Serial port monitor after button 3 short click.
 
 ```
 Frame: 0x301  	Node (1,3)		data: FF FF 03 FC 00 FF FF FF 
-> Accepted box: 1 instr: 3
-Frame: 0x302  	Node (3,3)		data: FF FF 07 FF FF FF FF FF 
+> Accepted box: 1 instr: 2
+Frame: 0x302  	Node (3,3)		data: FF FF 01 FF FF FF FF FF 
 
 Frame: 0x301  	Node (1,3)		data: FF FF 03 FC 00 FF FF FF 
-> Accepted box: 1 instr: 3
-Frame: 0x302  	Node (3,3)		data: FF FF 07 00 FF FF FF FF 
+> Accepted box: 1 instr: 2
+Frame: 0x302  	Node (3,3)		data: FF FF 01 00 FF FF FF FF 
 ```
-After received `0x301` button message from node (1,3) Hapcanuino accepts the box 1 and calls instruction 3. Our device also send `0x02` frame as the `LED7` changes its status (toggles).
+After received `0x301` button message from node (1,3) Hapcanuino accepts the box 1 and calls instruction 2. Our device also send `0x302` frame as the `LED7` changes its status (toggles).
 
 Same technique can be used to set up all other boxes and calls different instructions on other message received.
 
 ## Next step
 
-To be continued...
+You can already build simple devices with this knowledge, but wait.. there's more ;). More means less in this case. With submodules You can create devices firmware much quicker, even without knowledge of Hapcan frames structure. Let's jump into [[submodule]] example.

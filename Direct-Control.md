@@ -52,29 +52,29 @@ void ExecuteInstruction(Hapcan::InstructionStruct& exec, Hapcan::HapcanMessage& 
 {
 	switch (exec.Instruction())
 	{
+	case 0: // turn LED OFF
+		digitalWrite(PIN7, LOW);
+		break;
 	case 1: // turn LED ON
 		digitalWrite(PIN7, HIGH);
 		break;
-	case 2: // turn LED OFF
-		digitalWrite(PIN7, LOW);
-		break;
-	case 3: // toggle LED
+	case 2: // toggle LED
 		digitalWrite(PIN7, digitalRead(PIN7) == LOW);
 		break;
-		//case 4: // put other instructions here; break;
+	//case 3: // put other instructions here; break;
 	}
 }
 ```
 
 This function tests received instruction by calling `exec.Instruction()` method. Function returns the first data byte from received message as this is defined as instruction.
 
-LED will turn ON if instruction is 0x01, turn OFF when 0x02 and toggle on 0x03.
+LED will turn ON if instruction is 0x01, turn OFF when 0x00 and toggle on 0x02.
 
 To send this control message in Hapcan Programmer use monitor window.
 
 ![Hapcan programmer send control frame](img/hapcan-programmer-send-control-frame.png)
 
-Choose 0x10A frame, then make sure You put a proper group and node instead of XX XX bytes, and set instruction at byte 5 (I've put 0x03 here for toggle).
+Choose 0x10A frame, then make sure You put a proper group and node instead of XX XX bytes, and set instruction at byte 5 (I've put 0x02 here for toggle).
 Each time You send this message to the BUS, LED will toggle.
 
 ## Next step
